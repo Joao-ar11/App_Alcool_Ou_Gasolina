@@ -31,15 +31,36 @@ class MainActivity : AppCompatActivity() {
         val precoAlcool = editAlcool.text.toString()
         val precoGasolina = editGasolina.text.toString()
 
-        val precoAlcoolNumero = precoAlcool.toDouble()
-        val precoGasolinaNumero = precoGasolina.toDouble()
-        val resultado = precoAlcoolNumero / precoGasolinaNumero
+        val resultadoValidacao = validarCampos(precoAlcool, precoGasolina)
 
-        if (resultado >= 0.7) {
-            textResultado.text = "Melhor usar Gasolina"
-        } else {
-            textResultado.text = "Melhor usar Álcool"
+        if (resultadoValidacao) {
+
+            val precoAlcoolNumero = precoAlcool.toDouble()
+            val precoGasolinaNumero = precoGasolina.toDouble()
+            val resultado = precoAlcoolNumero / precoGasolinaNumero
+
+            if (resultado >= 0.7) {
+                textResultado.text = "Melhor usar Gasolina"
+            } else {
+                textResultado.text = "Melhor usar Álcool"
+            }
         }
+    }
+
+    private fun validarCampos(precoAlcool: String, precoGasolina: String): Boolean {
+
+        textInputAlcool.error = null
+        textInputGasolina.error = null
+
+        if (precoAlcool.isEmpty()) {
+            textInputAlcool.error = "Digite o preço do álcool"
+            return false
+        } else if (precoGasolina.isEmpty()) {
+            textInputGasolina.error = "Digite o preço da gasolina"
+            return false
+        }
+
+        return true
     }
 
     private fun inicializarComponentesInterface() {
